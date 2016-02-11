@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects>
+	<object name="RUTest" path="C:\RADTEST_REPOS\GUINEA_RADTEST\RUTest\RUTest.exe" browser="false"/>
+	<object name="osTicket" path="http://wusrc185161-je0/osticket/" browser="Chrome"/>
+	<object name="Vantive" path="Vantive.RDP" browser="false"/>
+	<object name="RSIM" path="http://rsim.radiant.com" browser="Internet Explorer"/>
+</objects>
