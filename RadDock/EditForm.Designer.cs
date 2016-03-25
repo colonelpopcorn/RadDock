@@ -33,10 +33,6 @@
 			this.Submit = new System.Windows.Forms.Button();
 			this.RadDock = new System.Windows.Forms.NotifyIcon(this.components);
 			this.RadDockMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.Exit = new System.Windows.Forms.ToolStripMenuItem();
-			this.Edit = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.RadDockMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// Submit
@@ -60,31 +56,8 @@
 			// RadDockMenu
 			// 
 			this.RadDockMenu.ImeMode = System.Windows.Forms.ImeMode.Off;
-			this.RadDockMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSeparator1,
-            this.Edit,
-            this.Exit});
 			this.RadDockMenu.Name = "contextMenuStrip1";
-			this.RadDockMenu.Size = new System.Drawing.Size(153, 76);
-			// 
-			// Exit
-			// 
-			this.Exit.Name = "Exit";
-			this.Exit.Size = new System.Drawing.Size(152, 22);
-			this.Exit.Text = "Exit";
-			this.Exit.Click += new System.EventHandler(this.Exit_Click);
-			// 
-			// Edit
-			// 
-			this.Edit.Name = "Edit";
-			this.Edit.Size = new System.Drawing.Size(152, 22);
-			this.Edit.Text = "Edit";
-			this.Edit.Click += new System.EventHandler(this.Edit_Click);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+			this.RadDockMenu.Size = new System.Drawing.Size(153, 26);
 			// 
 			// EditForm
 			// 
@@ -99,7 +72,6 @@
 			this.Name = "EditForm";
 			this.ShowInTaskbar = false;
 			this.Text = "RadDock - Edit";
-			this.RadDockMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -109,9 +81,6 @@
 		private System.Windows.Forms.Button Submit;
 		private System.Windows.Forms.ContextMenuStrip RadDockMenu;
 		private System.Windows.Forms.NotifyIcon RadDock;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripMenuItem Edit;
-		private System.Windows.Forms.ToolStripMenuItem Exit;
 	}
 }
 

@@ -13,21 +13,50 @@ namespace RadDock
 	public partial class EditForm : Form
 	{
 		int i = 1;
-		Database db = new Database(@"C:\Users\jling\Documents\raddock\RadDock\bin\debug\info.xml");
+		private Database db = new Database(@"C:\Users\jling\Documents\raddock\RadDock\bin\debug\info.xml");
+		private LinkedList<string> names;
+		private LinkedList<string> paths;
+		private LinkedList<string> browsers;
+
+
+
 		public EditForm()
 		{
 			InitializeComponent();
-			InitializeTextBoxes();
+			InitializeItems();
 			this.Opacity = 0;
 			this.Hide();
 		}
 
-		private void InitializeTextBoxes()
+		private void InitializeItems()
 		{
+			setAll();
 			nameBoxes();
 			pathBoxes();
 			browserBoxes();
 			buildMenuOptions();
+		}
+
+		private void setNames()
+		{
+			this.names = db.getNames();
+		}
+
+		private void setPaths()
+		{
+			this.paths = db.getPaths();
+		}
+
+		private void setBrowsers()
+		{
+			this.browsers = db.getBrowsers();
+		}
+
+		private void setAll()
+		{
+			setNames();
+			setPaths();
+			setBrowsers();
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -47,7 +76,7 @@ namespace RadDock
 
 		private void nameBoxes()
 		{
-			foreach (string name in db.getNames())
+			foreach (string name in this.names)
 			{
 				TextBox something = new TextBox();
 				Label labelForSomething = new Label();
@@ -65,7 +94,7 @@ namespace RadDock
 
 		private void pathBoxes()
 		{
-			foreach (string path in db.getPaths())
+			foreach (string path in this.paths)
 			{
 				TextBox something = new TextBox();
 				Label labelForSomething = new Label();
@@ -85,7 +114,7 @@ namespace RadDock
 
 		private void browserBoxes()
 		{
-			foreach (string browser in db.getBrowsers())
+			foreach (string browser in this.browsers)
 			{
 				TextBox something = new TextBox();
 				Label labelForSomething = new Label();
@@ -103,12 +132,9 @@ namespace RadDock
 
 		private void buildMenuOptions()
 		{
-			LinkedList<string> names = db.getNames();
-			LinkedList<string> paths = db.getPaths();
-			LinkedList<string> browsers = db.getBrowsers();
 			LinkedList<ToolStripMenuItem> items = new LinkedList<ToolStripMenuItem>();
 
-			foreach (string name in names)
+			foreach (string name in this.names)
 			{
 				ToolStripMenuItem item = new ToolStripMenuItem();
 				item.Name = name;
@@ -118,10 +144,19 @@ namespace RadDock
 				i++;
 			}
 			i = 1;
+
 			foreach (ToolStripMenuItem item in items)
 			{
 				RadDockMenu.Items.Add(item);
 			}
+
+			ToolStripMenuItem edit = new ToolStripMenuItem("Edit");
+			ToolStripMenuItem exit = new ToolStripMenuItem("Exit");
+			edit.Click += new EventHandler(Edit_Click);
+			exit.Click += new EventHandler(Exit_Click);
+			RadDockMenu.Items.Add(new ToolStripSeparator());
+			RadDockMenu.Items.Add(edit);
+			RadDockMenu.Items.Add(exit);
 
 		}
 
@@ -148,4 +183,5 @@ namespace RadDock
 			MessageBox.Show("HI!");
 		}
 	}
+
 }
