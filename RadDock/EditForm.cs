@@ -10,23 +10,24 @@ using System.Windows.Forms;
 
 namespace RadDock
 {
-    public partial class EditForm : Form
-    {
+	public partial class EditForm : Form
+	{
 		int i = 1;
-		Database db = new Database(@"C:\Users\jl250281\Documents\Visual Studio 2015\Projects\RadDock\RadDock\info.xml");
+		Database db = new Database(@"C:\Users\jling\Documents\raddock\RadDock\bin\debug\info.xml");
 		public EditForm()
-        {
-            InitializeComponent();
+		{
+			InitializeComponent();
 			InitializeTextBoxes();
 			this.Opacity = 0;
 			this.Hide();
-        }
+		}
 
 		private void InitializeTextBoxes()
 		{
 			nameBoxes();
 			pathBoxes();
 			browserBoxes();
+			buildMenuOptions();
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -81,7 +82,7 @@ namespace RadDock
 			}
 			i = 1;
 		}
-		
+
 		private void browserBoxes()
 		{
 			foreach (string browser in db.getBrowsers())
@@ -102,17 +103,25 @@ namespace RadDock
 
 		private void buildMenuOptions()
 		{
-			LinkedList<string> names = db.getNames();		
-			LinkedList<string> paths = db.getPaths();		
+			LinkedList<string> names = db.getNames();
+			LinkedList<string> paths = db.getPaths();
 			LinkedList<string> browsers = db.getBrowsers();
+			LinkedList<ToolStripMenuItem> items = new LinkedList<ToolStripMenuItem>();
 
 			foreach (string name in names)
 			{
 				ToolStripMenuItem item = new ToolStripMenuItem();
+				item.Name = name;
 				item.Text = name;
+				item.Click += new EventHandler(Dynamic_Click);
+				items.AddFirst(item);
 				i++;
 			}
 			i = 1;
+			foreach (ToolStripMenuItem item in items)
+			{
+				RadDockMenu.Items.Add(item);
+			}
 
 		}
 
@@ -131,6 +140,12 @@ namespace RadDock
 			this.Opacity = 100;
 			this.Show();
 			this.ShowInTaskbar = true;
+		}
+
+		private void Dynamic_Click(object sender, EventArgs e)
+		{
+			//TODO: write code to open an application based on what's in the path definition.
+			MessageBox.Show("HI!");
 		}
 	}
 }
