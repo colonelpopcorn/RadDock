@@ -15,24 +15,18 @@ namespace RadDock
 		private LinkedList<string> names;
 		private LinkedList<string> paths;
 		private LinkedList<string> browsers;
+		public Form finalForm = new Form();
 
-		private void setNames()
+		public UIBuilder()
 		{
 			this.names = db.getNames();
-		}
-
-		private void setPaths()
-		{
 			this.paths = db.getPaths();
-		}
-
-		private void setBrowsers()
-		{
 			this.browsers = db.getBrowsers();
 		}
 
-		private void nameBoxes()
+		public LinkedList<Control> nameBoxes()
 		{
+			LinkedList<Control> boxes = new LinkedList<Control>();
 			foreach (string name in this.names)
 			{
 				TextBox something = new TextBox();
@@ -42,15 +36,17 @@ namespace RadDock
 				something.Text = name;
 				labelForSomething.Text = "Name:";
 				something.Name = "DynamicName" + i.ToString();
-				//this.Controls.Add(something);
-				//this.Controls.Add(labelForSomething);
+				boxes.AddFirst(something);
+				boxes.AddFirst(labelForSomething);
 				i++;
 			}
 			i = 1;
+			return boxes;
 		}
 
-		private void pathBoxes()
+		public LinkedList<Control> pathBoxes()
 		{
+			LinkedList<Control> boxes = new LinkedList<Control>();
 			foreach (string path in this.paths)
 			{
 				TextBox something = new TextBox();
@@ -62,15 +58,17 @@ namespace RadDock
 				something.Name = "DynamicPath" + i.ToString();
 				something.AutoSize = false;
 				something.Size = new System.Drawing.Size(300, 20);
-				//this.Controls.Add(something);
-				//this.Controls.Add(labelForSomething);
+				boxes.AddFirst(something);
+				boxes.AddFirst(labelForSomething);
 				i++;
 			}
 			i = 1;
+			return boxes;
 		}
 
-		private void browserBoxes()
+		public LinkedList<Control> browserBoxes()
 		{
+			LinkedList<Control> boxes = new LinkedList<Control>();
 			foreach (string browser in this.browsers)
 			{
 				TextBox something = new TextBox();
@@ -80,41 +78,28 @@ namespace RadDock
 				something.Text = browser;
 				labelForSomething.Text = "Browser:";
 				something.Name = "DynamicBrowser" + i.ToString();
-				//this.Controls.Add(something);
-				//this.Controls.Add(labelForSomething);
+				boxes.AddFirst(something);
+				boxes.AddFirst(labelForSomething);
 				i++;
 			}
 			i = 1;
+			return boxes;
 		}
 
-		private void buildMenuOptions()
+		public LinkedList<object> buildMenuOptions(EventHandler e)
 		{
-			LinkedList<ToolStripMenuItem> items = new LinkedList<ToolStripMenuItem>();
-
+			LinkedList<object> items = new LinkedList<object>();
 			foreach (string name in this.names)
 			{
 				ToolStripMenuItem item = new ToolStripMenuItem();
 				item.Name = name;
 				item.Text = name;
-				//item.Click += new EventHandler(Dynamic_Click);
+				item.Click += e;
 				items.AddFirst(item);
 				i++;
 			}
 			i = 1;
-
-			foreach (ToolStripMenuItem item in items)
-			{
-				//RadDockMenu.Items.Add(item);
-			}
-
-			ToolStripMenuItem edit = new ToolStripMenuItem("Edit");
-			ToolStripMenuItem exit = new ToolStripMenuItem("Exit");
-			//edit.Click += new EventHandler(Edit_Click);
-			//exit.Click += new EventHandler(Exit_Click);
-			//RadDockMenu.Items.Add(new ToolStripSeparator());
-			//RadDockMenu.Items.Add(edit);
-			//RadDockMenu.Items.Add(exit);
-
-		}
+			return items;
+		}	
 	}
 }

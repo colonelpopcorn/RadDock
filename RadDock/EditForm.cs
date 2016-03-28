@@ -17,25 +17,36 @@ namespace RadDock
 		public EditForm()
 		{
 			InitializeComponent();
-			InitializeItems();
+			InitializeDynamicForm();
 			this.Opacity = 0;
 			this.Hide();
 		}
 
-		private void InitializeItems()
+		private void InitializeDynamicForm()
 		{
-			//setAll();
-			//nameBoxes();
-			//pathBoxes();
-			//browserBoxes();
-			//buildMenuOptions();
-		}
-
-		private void setAll()
-		{
-			//setNames();
-			//setPaths();
-			//setBrowsers();
+			foreach (Control con in ui.nameBoxes())
+			{
+				this.Controls.Add(con);
+			}
+			foreach (Control con in ui.pathBoxes())
+			{
+				this.Controls.Add(con);
+			}
+			foreach (Control con in ui.browserBoxes())
+			{
+				this.Controls.Add(con);
+			}
+			foreach (ToolStripItem item in ui.buildMenuOptions(Dynamic_Click))
+			{
+				RadDockMenu.Items.Add(item);
+			}
+			ToolStripMenuItem edit = new ToolStripMenuItem("Edit");
+			ToolStripMenuItem exit = new ToolStripMenuItem("Exit");
+			edit.Click += new EventHandler(Edit_Click);
+			exit.Click += new EventHandler(Exit_Click);
+			RadDockMenu.Items.Add(new ToolStripSeparator());
+			RadDockMenu.Items.Add(edit);
+			RadDockMenu.Items.Add(exit);
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -58,11 +69,6 @@ namespace RadDock
 			//TODO: write code to write strings to XML database for each dynamic text box.
 		}
 
-		private void Exit_Click(object sender, EventArgs e)
-		{
-			Application.Exit();
-		}
-
 		private void Edit_Click(object sender, EventArgs e)
 		{
 			this.Opacity = 100;
@@ -70,10 +76,14 @@ namespace RadDock
 			this.ShowInTaskbar = true;
 		}
 
+		private void Exit_Click(object sender, EventArgs e)
+		{
+			Application.Exit();
+		}
+
 		private void Dynamic_Click(object sender, EventArgs e)
 		{
 			//TODO: write code to open an application based on what's in the path definition.
-			MessageBox.Show("HI!");
 		}
 	}
 
