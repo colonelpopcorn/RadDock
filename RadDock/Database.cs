@@ -9,17 +9,18 @@ namespace RadDock
 {
 	class Database
 	{
-		private string _path { get; set; }
+		private string path { get; set; }
 		private bool _isWebApp { get; set; }
 		private XElement file;
 		public LinkedList<string> names = new LinkedList<string>();
 		public LinkedList<string> browsers = new LinkedList<string>();
 		public LinkedList<string> paths = new LinkedList<string>();
 
-		public Database(string path)
+		public Database()
 		{
-			this._path = path;
-			file = XElement.Load(this._path);
+			XElement localFile = XElement.Load(@".\path.xml");
+			this.path = localFile.Value;
+			file = XElement.Load(this.path);
 		}
 		private IEnumerable<XElement> getRows()
 		{

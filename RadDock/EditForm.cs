@@ -12,13 +12,7 @@ namespace RadDock
 {
 	public partial class EditForm : Form
 	{
-		int i = 1;
-		private Database db = new Database(@"C:\Users\jling\Documents\raddock\RadDock\bin\debug\info.xml");
-		private LinkedList<string> names;
-		private LinkedList<string> paths;
-		private LinkedList<string> browsers;
-
-
+		UIBuilder ui = new UIBuilder();
 
 		public EditForm()
 		{
@@ -30,33 +24,18 @@ namespace RadDock
 
 		private void InitializeItems()
 		{
-			setAll();
-			nameBoxes();
-			pathBoxes();
-			browserBoxes();
-			buildMenuOptions();
-		}
-
-		private void setNames()
-		{
-			this.names = db.getNames();
-		}
-
-		private void setPaths()
-		{
-			this.paths = db.getPaths();
-		}
-
-		private void setBrowsers()
-		{
-			this.browsers = db.getBrowsers();
+			//setAll();
+			//nameBoxes();
+			//pathBoxes();
+			//browserBoxes();
+			//buildMenuOptions();
 		}
 
 		private void setAll()
 		{
-			setNames();
-			setPaths();
-			setBrowsers();
+			//setNames();
+			//setPaths();
+			//setBrowsers();
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -72,92 +51,6 @@ namespace RadDock
 			{
 				Application.Exit();
 			}
-		}
-
-		private void nameBoxes()
-		{
-			foreach (string name in this.names)
-			{
-				TextBox something = new TextBox();
-				Label labelForSomething = new Label();
-				something.Location = new Point(75, 25 * i);
-				labelForSomething.Location = new Point(25, 25 * i);
-				something.Text = name;
-				labelForSomething.Text = "Name:";
-				something.Name = "DynamicName" + i.ToString();
-				this.Controls.Add(something);
-				this.Controls.Add(labelForSomething);
-				i++;
-			}
-			i = 1;
-		}
-
-		private void pathBoxes()
-		{
-			foreach (string path in this.paths)
-			{
-				TextBox something = new TextBox();
-				Label labelForSomething = new Label();
-				something.Location = new Point(250, 25 * i);
-				labelForSomething.Location = new Point(190, 25 * i);
-				something.Text = path;
-				labelForSomething.Text = "Path:";
-				something.Name = "DynamicPath" + i.ToString();
-				something.AutoSize = false;
-				something.Size = new System.Drawing.Size(300, 20);
-				this.Controls.Add(something);
-				this.Controls.Add(labelForSomething);
-				i++;
-			}
-			i = 1;
-		}
-
-		private void browserBoxes()
-		{
-			foreach (string browser in this.browsers)
-			{
-				TextBox something = new TextBox();
-				Label labelForSomething = new Label();
-				something.Location = new Point(650, 25 * i);
-				labelForSomething.Location = new Point(590, 25 * i);
-				something.Text = browser;
-				labelForSomething.Text = "Browser:";
-				something.Name = "DynamicBrowser" + i.ToString();
-				this.Controls.Add(something);
-				this.Controls.Add(labelForSomething);
-				i++;
-			}
-			i = 1;
-		}
-
-		private void buildMenuOptions()
-		{
-			LinkedList<ToolStripMenuItem> items = new LinkedList<ToolStripMenuItem>();
-
-			foreach (string name in this.names)
-			{
-				ToolStripMenuItem item = new ToolStripMenuItem();
-				item.Name = name;
-				item.Text = name;
-				item.Click += new EventHandler(Dynamic_Click);
-				items.AddFirst(item);
-				i++;
-			}
-			i = 1;
-
-			foreach (ToolStripMenuItem item in items)
-			{
-				RadDockMenu.Items.Add(item);
-			}
-
-			ToolStripMenuItem edit = new ToolStripMenuItem("Edit");
-			ToolStripMenuItem exit = new ToolStripMenuItem("Exit");
-			edit.Click += new EventHandler(Edit_Click);
-			exit.Click += new EventHandler(Exit_Click);
-			RadDockMenu.Items.Add(new ToolStripSeparator());
-			RadDockMenu.Items.Add(edit);
-			RadDockMenu.Items.Add(exit);
-
 		}
 
 		private void Submit_Click(object sender, EventArgs e)
