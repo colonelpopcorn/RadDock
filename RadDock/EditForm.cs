@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -83,7 +84,20 @@ namespace RadDock
 
 		private void Dynamic_Click(object sender, EventArgs e)
 		{
-			//TODO: write code to open an application based on what's in the path definition.
+			RadDockMenuItem item = (RadDockMenuItem)sender;
+			try
+			{
+				if (item.browser == "false")
+					Process.Start(item.path);
+				else
+					Process.Start(item.path, item.browser);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+			
+			
 		}
 	}
 

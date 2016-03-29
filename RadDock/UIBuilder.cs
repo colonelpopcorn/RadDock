@@ -12,28 +12,25 @@ namespace RadDock
 	{
 		private int i = 1;
 		private Database db = new Database();
-		private LinkedList<string> names;
-		private LinkedList<string> paths;
-		private LinkedList<string> browsers;
+		private LinkedList<Info> info;
 		public Form finalForm = new Form();
 
 		public UIBuilder()
 		{
-			this.names = db.getNames();
-			this.paths = db.getPaths();
-			this.browsers = db.getBrowsers();
+			this.info = db.getInfoObject();
 		}
 
 		public LinkedList<Control> nameBoxes()
 		{
 			LinkedList<Control> boxes = new LinkedList<Control>();
-			foreach (string name in this.names)
+			i = 1;
+			foreach (Info obj in this.info)
 			{
 				TextBox something = new TextBox();
 				Label labelForSomething = new Label();
 				something.Location = new Point(75, 25 * i);
 				labelForSomething.Location = new Point(25, 25 * i);
-				something.Text = name;
+				something.Text = obj.name;
 				labelForSomething.Text = "Name:";
 				something.Name = "DynamicName" + i.ToString();
 				boxes.AddFirst(something);
@@ -47,13 +44,14 @@ namespace RadDock
 		public LinkedList<Control> pathBoxes()
 		{
 			LinkedList<Control> boxes = new LinkedList<Control>();
-			foreach (string path in this.paths)
+			i = -1;
+			foreach (Info obj in this.info)
 			{
 				TextBox something = new TextBox();
 				Label labelForSomething = new Label();
 				something.Location = new Point(250, 25 * i);
 				labelForSomething.Location = new Point(190, 25 * i);
-				something.Text = path;
+				something.Text = obj.path;
 				labelForSomething.Text = "Path:";
 				something.Name = "DynamicPath" + i.ToString();
 				something.AutoSize = false;
@@ -69,13 +67,13 @@ namespace RadDock
 		public LinkedList<Control> browserBoxes()
 		{
 			LinkedList<Control> boxes = new LinkedList<Control>();
-			foreach (string browser in this.browsers)
+			foreach (Info obj in this.info)
 			{
 				TextBox something = new TextBox();
 				Label labelForSomething = new Label();
 				something.Location = new Point(650, 25 * i);
 				labelForSomething.Location = new Point(590, 25 * i);
-				something.Text = browser;
+				something.Text = obj.browser;
 				labelForSomething.Text = "Browser:";
 				something.Name = "DynamicBrowser" + i.ToString();
 				boxes.AddFirst(something);
@@ -89,11 +87,13 @@ namespace RadDock
 		public LinkedList<object> buildMenuOptions(EventHandler e)
 		{
 			LinkedList<object> items = new LinkedList<object>();
-			foreach (string name in this.names)
+			foreach (Info obj in this.info)
 			{
-				ToolStripMenuItem item = new ToolStripMenuItem();
-				item.Name = name;
-				item.Text = name;
+				RadDockMenuItem item = new RadDockMenuItem();
+				item.Name = obj.name;
+				item.Text = obj.name;
+				item.path = obj.path;
+				item.browser = obj.browser;
 				item.Click += e;
 				items.AddFirst(item);
 				i++;

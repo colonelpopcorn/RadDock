@@ -7,28 +7,48 @@ using System.Xml.Linq;
 
 namespace RadDock
 {
+	class Info
+	{
+		public string name;
+		public string path;
+		public string browser;
+
+		public Info(string name, string path, string browser)
+		{
+			this.name = name;
+			this.path = path;
+			this.browser = browser;
+
+		}
+	}
+
 	class Database
 	{
 		private string path { get; set; }
 		private bool _isWebApp { get; set; }
 		private XElement file;
-		public LinkedList<string> names = new LinkedList<string>();
-		public LinkedList<string> browsers = new LinkedList<string>();
-		public LinkedList<string> paths = new LinkedList<string>();
+		private LinkedList<string> names = new LinkedList<string>();
+		private LinkedList<string> browsers = new LinkedList<string>();
+		private LinkedList<string> paths = new LinkedList<string>();
 
 		public Database()
 		{
 			XElement localFile = XElement.Load(@".\path.xml");
 			this.path = localFile.Value;
 			file = XElement.Load(this.path);
+			setNames();
+			setPaths();
+			setBrowsers();
 		}
+
 		private IEnumerable<XElement> getRows()
 		{
 			IEnumerable<XElement> rows = from el in file.Elements()
 										 select el;
 			return rows;
 		}
-		public LinkedList<string> getNames()
+
+		private LinkedList<string> setNames()
 		{
 			foreach (XElement element in this.getRows())
 			{
@@ -37,7 +57,8 @@ namespace RadDock
 			}
 			return this.names;
 		}
-		public LinkedList<string> getBrowsers()
+
+		private LinkedList<string> setBrowsers()
 		{
 			foreach (XElement element in this.getRows())
 			{
@@ -46,7 +67,8 @@ namespace RadDock
 			}
 			return this.browsers;
 		}
-		public LinkedList<string> getPaths()
+
+		private LinkedList<string> setPaths()
 		{
 			foreach (XElement element in this.getRows())
 			{
@@ -55,6 +77,22 @@ namespace RadDock
 			}
 			return this.paths;
 		}
+
+		public LinkedList<Info> getInfoObject()
+		{
+			LinkedList<Info> info = new LinkedList<Info>();
+			using (var names = this.names.GetEnumerator())
+			using (var paths = this.paths.GetEnumerator())
+			using(var browsers = this.browsers.GetEnumerator())
+			{
+				while (names.MoveNext() && paths.MoveNext() && browsers.MoveNext())
+				{
+					info.AddFirst(new Info(names.Current, paths.Current, browsers.Current));
+				}
+			}
+				return info;
+		}
+
 		public bool write(string name, string path, string browser)
 		{
 			setName(name);
