@@ -1,4 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <container>
 	<path>C:\Users\jling\Documents\raddock\RadDock\bin\debug\info.xml</path>
+	<browserPath id="Internet Explorer">C:\Program Files\Internet Explorer\iexplore.exe</browserPath>
+	<browserPath id="Chrome">C:\Program Files\Internet Explorer\iexplore.exe</browserPath>
+	<browserPath id="Firefox">C:\Program Files\Internet Explorer\iexplore.exe</browserPath>
+	<browserPath id="Safari">C:\Program Files\Internet Explorer\iexplore.exe</browserPath>
 </container>

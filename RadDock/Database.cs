@@ -7,21 +7,6 @@ using System.Xml.Linq;
 
 namespace RadDock
 {
-	class Info
-	{
-		public string name;
-		public string path;
-		public string browser;
-
-		public Info(string name, string path, string browser)
-		{
-			this.name = name;
-			this.path = path;
-			this.browser = browser;
-
-		}
-	}
-
 	class Database
 	{
 		private string path { get; set; }
@@ -78,16 +63,16 @@ namespace RadDock
 			return this.paths;
 		}
 
-		public LinkedList<Info> getInfoObject()
+		public LinkedList<RadDockMenuItem> getInfoObject()
 		{
-			LinkedList<Info> info = new LinkedList<Info>();
+			LinkedList<RadDockMenuItem> info = new LinkedList<RadDockMenuItem>();
 			using (var names = this.names.GetEnumerator())
 			using (var paths = this.paths.GetEnumerator())
 			using(var browsers = this.browsers.GetEnumerator())
 			{
 				while (names.MoveNext() && paths.MoveNext() && browsers.MoveNext())
 				{
-					info.AddFirst(new Info(names.Current, paths.Current, browsers.Current));
+					info.AddFirst(new RadDockMenuItem(names.Current, paths.Current, browsers.Current));
 				}
 			}
 				return info;

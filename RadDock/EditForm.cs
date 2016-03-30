@@ -37,7 +37,7 @@ namespace RadDock
 			{
 				this.Controls.Add(con);
 			}
-			foreach (ToolStripItem item in ui.buildMenuOptions(Dynamic_Click))
+			foreach (RadDockMenuItem item in ui.buildMenuOptions(Dynamic_Click))
 			{
 				RadDockMenu.Items.Add(item);
 			}
@@ -90,7 +90,7 @@ namespace RadDock
 				if (item.browser == "false")
 					Process.Start(item.path);
 				else
-					Process.Start(item.path, item.browser);
+					Process.Start(item.browser, item.path);
 			}
 			catch (Exception ex)
 			{

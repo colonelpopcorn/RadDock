@@ -11,5 +11,13 @@ namespace RadDock
 	{
 		public string path;
 		public string browser;
+
+		public RadDockMenuItem(string name, string path, string browser)
+		{
+			this.path = path;
+			this.browser = browser;
+			this.Name = name;
+			this.Text = name;
+		}
 	}
 }

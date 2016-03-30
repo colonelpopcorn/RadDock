@@ -12,7 +12,7 @@ namespace RadDock
 	{
 		private int i = 1;
 		private Database db = new Database();
-		private LinkedList<Info> info;
+		private LinkedList<RadDockMenuItem> info;
 		public Form finalForm = new Form();
 
 		public UIBuilder()
@@ -23,16 +23,16 @@ namespace RadDock
 		public LinkedList<Control> nameBoxes()
 		{
 			LinkedList<Control> boxes = new LinkedList<Control>();
-			i = 1;
-			foreach (Info obj in this.info)
+			foreach (RadDockMenuItem obj in this.info)
 			{
 				TextBox something = new TextBox();
 				Label labelForSomething = new Label();
 				something.Location = new Point(75, 25 * i);
 				labelForSomething.Location = new Point(25, 25 * i);
-				something.Text = obj.name;
-				labelForSomething.Text = "Name:";
+				something.Text = obj.Name;
+				labelForSomething.Text = "Name " + i.ToString() + ":";
 				something.Name = "DynamicName" + i.ToString();
+				labelForSomething.AutoSize = true;
 				boxes.AddFirst(something);
 				boxes.AddFirst(labelForSomething);
 				i++;
@@ -44,18 +44,18 @@ namespace RadDock
 		public LinkedList<Control> pathBoxes()
 		{
 			LinkedList<Control> boxes = new LinkedList<Control>();
-			i = -1;
-			foreach (Info obj in this.info)
+			foreach (RadDockMenuItem obj in this.info)
 			{
 				TextBox something = new TextBox();
 				Label labelForSomething = new Label();
 				something.Location = new Point(250, 25 * i);
 				labelForSomething.Location = new Point(190, 25 * i);
 				something.Text = obj.path;
-				labelForSomething.Text = "Path:";
+				labelForSomething.Text = "Path " + i.ToString() +":";
 				something.Name = "DynamicPath" + i.ToString();
 				something.AutoSize = false;
 				something.Size = new System.Drawing.Size(300, 20);
+				labelForSomething.AutoSize = true;
 				boxes.AddFirst(something);
 				boxes.AddFirst(labelForSomething);
 				i++;
@@ -67,15 +67,16 @@ namespace RadDock
 		public LinkedList<Control> browserBoxes()
 		{
 			LinkedList<Control> boxes = new LinkedList<Control>();
-			foreach (Info obj in this.info)
+			foreach (RadDockMenuItem obj in this.info)
 			{
 				TextBox something = new TextBox();
 				Label labelForSomething = new Label();
 				something.Location = new Point(650, 25 * i);
 				labelForSomething.Location = new Point(590, 25 * i);
 				something.Text = obj.browser;
-				labelForSomething.Text = "Browser:";
+				labelForSomething.Text = "Browser " + i.ToString() + ":";
 				something.Name = "DynamicBrowser" + i.ToString();
+				labelForSomething.AutoSize = true;
 				boxes.AddFirst(something);
 				boxes.AddFirst(labelForSomething);
 				i++;
@@ -84,22 +85,13 @@ namespace RadDock
 			return boxes;
 		}
 
-		public LinkedList<object> buildMenuOptions(EventHandler e)
+		public LinkedList<RadDockMenuItem> buildMenuOptions(EventHandler e)
 		{
-			LinkedList<object> items = new LinkedList<object>();
-			foreach (Info obj in this.info)
+			foreach (RadDockMenuItem obj in this.info)
 			{
-				RadDockMenuItem item = new RadDockMenuItem();
-				item.Name = obj.name;
-				item.Text = obj.name;
-				item.path = obj.path;
-				item.browser = obj.browser;
-				item.Click += e;
-				items.AddFirst(item);
-				i++;
+				obj.Click += e;
 			}
-			i = 1;
-			return items;
+			return this.info;
 		}	
 	}
 }
