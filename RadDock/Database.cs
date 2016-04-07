@@ -10,16 +10,19 @@ namespace RadDock
 	class Database
 	{
 		private string path { get; set; }
-		private bool _isWebApp { get; set; }
+		private XElement localFile;
 		private XElement file;
 		private LinkedList<string> names = new LinkedList<string>();
 		private LinkedList<string> browsers = new LinkedList<string>();
 		private LinkedList<string> paths = new LinkedList<string>();
+		private LinkedList<string> CLIAndBrowserPaths = new LinkedList<string>();
+		private LinkedList<string> CLIAndBrowserKeys = new LinkedList<string>();
+
 
 		public Database()
 		{
-			XElement localFile = XElement.Load(@".\path.xml");
-			this.path = localFile.Value;
+			this.localFile = XElement.Load(@".\path.xml");
+			this.path = localFile.Attribute("path").Value;
 			file = XElement.Load(this.path);
 			setNames();
 			setPaths();
@@ -30,6 +33,18 @@ namespace RadDock
 		{
 			IEnumerable<XElement> rows = from el in file.Elements()
 										 select el;
+			return rows;
+		}
+
+		private IEnumerable<XNode> getBrowsersAndCLI()
+		{
+			IEnumerable<XElement> rows = from el in localFile.Elements()
+										 select el;
+			foreach (XNode node in rows)
+			{
+
+			}
+
 			return rows;
 		}
 
@@ -63,6 +78,26 @@ namespace RadDock
 			return this.paths;
 		}
 
+		private LinkedList<string> setCLIAndBrowserPaths()
+		{
+			foreach (XElement element in this.getBrowsersAndCLI())
+			{
+				string path = @element.Value;
+				this.CLIAndBrowserPaths.AddFirst(path);
+			}
+			return this.CLIAndBrowserPaths;
+		}
+
+		public LinkedList<string> getCLIAndBrowserKeys()
+		{
+			foreach (XElement element in this.getBrowsersAndCLI())
+			{
+				string key = @element.Attribute("id").Value;
+				this.CLIAndBrowserKeys.AddFirst(key);
+			}
+			return this.CLIAndBrowserKeys;
+		}
+
 		public LinkedList<RadDockMenuItem> getInfoObject()
 		{
 			LinkedList<RadDockMenuItem> info = new LinkedList<RadDockMenuItem>();
@@ -78,28 +113,13 @@ namespace RadDock
 				return info;
 		}
 
-		public bool write(string name, string path, string browser)
+		public void write(string name, string path, string browser)
 		{
-			setName(name);
-			setPath(path);
-			setBrowser(browser);
-			return true;
+			foreach (XElement element in this.getRows())
+			{
+				element.ReplaceAttributes(new XAttribute("name", name), new XAttribute("path", path), new XAttribute("browser", browser));
+			}
 		}
-
-		private void setName(string name)
-		{
-
-		}
-
-		private void setPath(string path)
-		{
-
-		}
-
-        private void setBrowser(string browser)
-        {
-
-        }
 
     }
 }

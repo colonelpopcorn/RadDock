@@ -13,11 +13,13 @@ namespace RadDock
 		private int i = 1;
 		private Database db = new Database();
 		private LinkedList<RadDockMenuItem> info;
+		public LinkedList<string> combo;
 		public Form finalForm = new Form();
 
 		public UIBuilder()
 		{
 			this.info = db.getInfoObject();
+			this.combo = db.getCLIAndBrowserKeys();
 		}
 
 		public LinkedList<Control> nameBoxes()
@@ -54,7 +56,7 @@ namespace RadDock
 				labelForSomething.Text = "Path " + i.ToString() +":";
 				something.Name = "DynamicPath" + i.ToString();
 				something.AutoSize = false;
-				something.Size = new System.Drawing.Size(300, 20);
+				something.Size = new Size(300, 20);
 				labelForSomething.AutoSize = true;
 				boxes.AddFirst(something);
 				boxes.AddFirst(labelForSomething);

@@ -25,22 +25,12 @@ namespace RadDock
 
 		private void InitializeDynamicForm()
 		{
-			foreach (Control con in ui.nameBoxes())
-			{
-				this.Controls.Add(con);
-			}
-			foreach (Control con in ui.pathBoxes())
-			{
-				this.Controls.Add(con);
-			}
-			foreach (Control con in ui.browserBoxes())
-			{
-				this.Controls.Add(con);
-			}
 			foreach (RadDockMenuItem item in ui.buildMenuOptions(Dynamic_Click))
 			{
 				RadDockMenu.Items.Add(item);
+				TableFormView.Rows.Add(item.Name, item.path);
 			}
+			foreach (string key in ui.combo) { this.Browser.Items.Add(key); }
 			ToolStripMenuItem edit = new ToolStripMenuItem("Edit");
 			ToolStripMenuItem exit = new ToolStripMenuItem("Exit");
 			edit.Click += new EventHandler(Edit_Click);
@@ -96,8 +86,6 @@ namespace RadDock
 			{
 				MessageBox.Show(ex.Message);
 			}
-			
-			
 		}
 	}
 
