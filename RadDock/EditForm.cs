@@ -13,12 +13,31 @@ namespace RadDock
 {
 	public partial class EditForm : Form
 	{
-		UIBuilder ui = new UIBuilder();
+		private UIBuilder ui = new UIBuilder();
+		private LinkedList<string> names;
+		private LinkedList<string> paths;
+		private LinkedList<string> browsers;
 
 		public EditForm()
 		{
+			
 			InitializeComponent();
 			InitializeDynamicForm();
+			this.names = new LinkedList<string>();
+			this.paths = new LinkedList<string>();
+			this.browsers = new LinkedList<string>();
+			foreach (DataGridViewRow dr in this.TableFormView.Rows)
+			{
+				try {
+					this.names.AddFirst(dr.Cells["ProgName"].Value.ToString());
+					this.paths.AddFirst(dr.Cells["Path"].Value.ToString());
+					this.browsers.AddFirst(dr.Cells["Browser"].Value.ToString());
+				}
+				catch (Exception exc)
+				{
+					continue;
+				}
+			}
 			this.Opacity = 0;
 			this.Hide();
 		}

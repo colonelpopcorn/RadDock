@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace RadDock
@@ -12,6 +10,7 @@ namespace RadDock
 		private string path { get; set; }
 		private XElement localFile;
 		private XElement file;
+		private XmlWriter writer;
 		private LinkedList<string> names = new LinkedList<string>();
 		private LinkedList<string> browsers = new LinkedList<string>();
 		private LinkedList<string> paths = new LinkedList<string>();
@@ -23,7 +22,8 @@ namespace RadDock
 		{
 			this.localFile = XElement.Load(@".\path.xml");
 			this.path = localFile.Attribute("path").Value;
-			file = XElement.Load(this.path);
+			this.file = XElement.Load(this.path);
+			this.writer = XmlWriter.Create(this.path);
 			setNames();
 			setPaths();
 			setBrowsers();
@@ -40,10 +40,6 @@ namespace RadDock
 		{
 			IEnumerable<XElement> rows = from el in localFile.Elements()
 										 select el;
-			foreach (XNode node in rows)
-			{
-
-			}
 
 			return rows;
 		}
@@ -110,15 +106,25 @@ namespace RadDock
 					info.AddFirst(new RadDockMenuItem(names.Current, paths.Current, browsers.Current));
 				}
 			}
-				return info;
+			return info;
 		}
 
-		public void write(string name, string path, string browser)
+		public void write(LinkedList<string> names, LinkedList<string> paths, LinkedList<string> browsers)
 		{
-			foreach (XElement element in this.getRows())
+			this.file.RemoveAll();
+			this.file.Add(new XElement("Objects"));	
+			using (var namesList = names.GetEnumerator())
+			using (var pathsList = paths.GetEnumerator())
+			using (var browsersList = browsers.GetEnumerator())
 			{
-				element.ReplaceAttributes(new XAttribute("name", name), new XAttribute("path", path), new XAttribute("browser", browser));
+				while (namesList.MoveNext() && pathsList.MoveNext() && browsersList.MoveNext())
+				{
+					XElement element = new XElement("object");
+					element.ReplaceAttributes(new XAttribute("name", namesList.Current), new XAttribute("path", pathsList.Current), new XAttribute("browser", browsersList.Current));
+					this.file.Add(element);
+				}
 			}
+			this.file.WriteTo(this.writer);
 		}
 
     }

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RadDock
@@ -94,6 +91,11 @@ namespace RadDock
 				obj.Click += e;
 			}
 			return this.info;
-		}	
+		}
+
+		public void write(LinkedList<string> names, LinkedList<string> paths, LinkedList<string> browsers)
+		{
+			db.write(names, paths, browsers);
+		}
 	}
 }
