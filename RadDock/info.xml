@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <objects>
-	<object name="RUTest" path="C:\RADTEST_REPOS\GUINEA_RADTEST\RUTest\RUTest.exe" browser="false"/>
-	<object name="osTicket" path="http://wusrc185161-je0/osticket/" browser="chrome.exe"/>
-	<object name="Vantive" path="Vantive.RDP" browser="false"/>
-	<object name="RSIM" path="http://rsim.radiant.com" browser="iexplorer.exe"/>
+	<object name="Google" path="http://google.com" browser="chrome.exe"/>
+	<object name="osTicket" path="C:\Program Files\Microsoft Office\Office15\OUTLOOK.exe" browser="false"/>
+	<object name="AD Server RD" path="ADServer.rdp" browser="false"/>
+	<object name="Github" path="https://github.com" browser="firefox.exe"/>
 </objects>
