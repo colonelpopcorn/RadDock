@@ -11,12 +11,14 @@ namespace RadDock
 		private XElement localFile;
 		private XElement file;
 		private XmlWriter writer;
-		private LinkedList<string> names = new LinkedList<string>();
-		private LinkedList<string> browsers = new LinkedList<string>();
-		private LinkedList<string> paths = new LinkedList<string>();
-		private LinkedList<string> CLIAndBrowserPaths = new LinkedList<string>();
-		private LinkedList<string> CLIAndBrowserKeys = new LinkedList<string>();
-
+        private List<KeyValuePair<string, temporaryObject>> programRows;
+		private List<KeyValuePair<string, string>> argProgramRows;
+        private struct temporaryObject
+        {
+            public string name;
+            public string path;
+            public string args;
+        };
 
 		public Database()
 		{
@@ -24,107 +26,100 @@ namespace RadDock
 			this.path = localFile.Attribute("path").Value;
 			this.file = XElement.Load(this.path);
 			this.writer = XmlWriter.Create(this.path);
-			setNames();
-			setPaths();
-			setBrowsers();
+            this.programRows = setProgramRows();
+            this.argProgramRows = setArgumentRows();
 		}
 
-		private IEnumerable<XElement> getRows()
+		private IEnumerable<XElement> getProgramRows()
 		{
-			IEnumerable<XElement> rows = from el in file.Elements()
-										 select el;
+			IEnumerable<XElement> rows = from all in file.Elements()
+										 select all;
 			return rows;
 		}
 
-		private IEnumerable<XNode> getBrowsersAndCLI()
+		private IEnumerable<XNode> getArgumentRows()
 		{
-			IEnumerable<XElement> rows = from el in localFile.Elements()
-										 select el;
+			IEnumerable<XElement> rows = from all in localFile.Elements()
+										 select all;
 
 			return rows;
 		}
 
-		private LinkedList<string> setNames()
+		private List<KeyValuePair<string, temporaryObject>> setProgramRows()
 		{
-			foreach (XElement element in this.getRows())
+            List<KeyValuePair<string, temporaryObject>> progRows = new List<KeyValuePair<string, temporaryObject>>();
+			foreach (XElement element in this.getProgramRows())
 			{
-				string name = element.Attribute("name").Value.ToString();
-				this.names.AddFirst(name);
-			}
-			return this.names;
-		}
-
-		private LinkedList<string> setBrowsers()
-		{
-			foreach (XElement element in this.getRows())
-			{
+                string name = element.Attribute("name").Value.ToString();
+                string path = @element.Attribute("path").Value.ToString();
 				string browser = element.Attribute("browser").Value.ToString();
-				this.browsers.AddFirst(browser);
+                temporaryObject programRow = new temporaryObject();
+                programRow.name = name;
+                programRow.path = path;
+                programRow.args = browser;
+                KeyValuePair<string, temporaryObject> finalRow = new KeyValuePair<string, temporaryObject>(name, programRow);
+                progRows.Add(finalRow);
 			}
-			return this.browsers;
+
+            return progRows;
 		}
 
-		private LinkedList<string> setPaths()
+		private List<KeyValuePair<string, string>> setArgumentRows()
 		{
-			foreach (XElement element in this.getRows())
-			{
-				string path = @element.Attribute("path").Value.ToString();
-				this.paths.AddFirst(path);
-			}
-			return this.paths;
-		}
-
-		private LinkedList<string> setCLIAndBrowserPaths()
-		{
-			foreach (XElement element in this.getBrowsersAndCLI())
+            List<KeyValuePair<string, string>> argProgRows = new List<KeyValuePair<string, string>>();
+			foreach (XElement element in this.getArgumentRows())
 			{
 				string path = @element.Value;
-				this.CLIAndBrowserPaths.AddFirst(path);
+                string name = @element.Attribute("id").Value.ToString();
+                argProgRows.Add(new KeyValuePair<string, string>(name, path));
 			}
-			return this.CLIAndBrowserPaths;
+            return argProgRows;
 		}
 
-		public LinkedList<string> getCLIAndBrowserKeys()
+		public List<RadDockMenuItem> getInfoObject()
 		{
-			foreach (XElement element in this.getBrowsersAndCLI())
+			List<RadDockMenuItem> info = new List<RadDockMenuItem>();
+            string argPath = "";
+			foreach (KeyValuePair<string, temporaryObject> row in this.programRows)
 			{
-				string key = @element.Attribute("id").Value;
-				this.CLIAndBrowserKeys.AddFirst(key);
-			}
-			return this.CLIAndBrowserKeys;
-		}
-
-		public LinkedList<RadDockMenuItem> getInfoObject()
-		{
-			LinkedList<RadDockMenuItem> info = new LinkedList<RadDockMenuItem>();
-			using (var names = this.names.GetEnumerator())
-			using (var paths = this.paths.GetEnumerator())
-			using(var browsers = this.browsers.GetEnumerator())
-			{
-				while (names.MoveNext() && paths.MoveNext() && browsers.MoveNext())
-				{
-					info.AddFirst(new RadDockMenuItem(names.Current, paths.Current, browsers.Current));
-				}
+                foreach (KeyValuePair<string, string> arg in argProgramRows)
+                {
+                    if (arg.Key == row.Value.args)
+                    {
+                        argPath = arg.Value;
+                    }
+                }
+                info.Add(new RadDockMenuItem(row.Key, row.Value.path, row.Value.args, argPath));
 			}
 			return info;
 		}
 
-		public void write(LinkedList<string> names, LinkedList<string> paths, LinkedList<string> browsers)
+        public List<RadDockComboBoxItem> getComboObject()
+        {
+            List<RadDockComboBoxItem> combo = new List<RadDockComboBoxItem>();
+            foreach (KeyValuePair<string, string> row in this.argProgramRows)
+            {
+                combo.Add(new RadDockComboBoxItem(row.Key, row.Value));
+            }
+            return combo;
+        }
+
+		public void write(int index, string name, string path, string arg)
 		{
-			this.file.RemoveAll();
-			this.file.Add(new XElement("Objects"));	
-			using (var namesList = names.GetEnumerator())
-			using (var pathsList = paths.GetEnumerator())
-			using (var browsersList = browsers.GetEnumerator())
-			{
-				while (namesList.MoveNext() && pathsList.MoveNext() && browsersList.MoveNext())
-				{
-					XElement element = new XElement("object");
-					element.ReplaceAttributes(new XAttribute("name", namesList.Current), new XAttribute("path", pathsList.Current), new XAttribute("browser", browsersList.Current));
-					this.file.Add(element);
-				}
-			}
-			this.file.WriteTo(this.writer);
+            var query = from all in file.Elements()
+                        select all;
+            foreach (XElement obj in query)
+            {
+                int indexNum = (int)obj.Attribute("index").Value;
+                if (obj.Attribute("index").Value.Equals(index))
+                {
+                    obj.Attribute("name").Value = name;
+                    obj.Attribute("path").Value = path;
+                    obj.Attribute("browser").Value = arg;
+                }
+                
+            }
+            file.Save("something.xml");
 		}
 
     }

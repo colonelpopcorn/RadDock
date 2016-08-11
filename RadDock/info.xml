@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <objects>
-	<object name="Google" path="http://google.com" browser="chrome.exe"/>
-	<object name="osTicket" path="C:\Program Files\Microsoft Office\Office15\OUTLOOK.exe" browser="false"/>
-	<object name="AD Server RD" path="ADServer.rdp" browser="false"/>
-	<object name="Github" path="https://github.com" browser="firefox.exe"/>
+	<object index="0" name="Google" path="http://google.com" browser="Chrome"/>
+	<object index="1" name="osTicket" path="C:\Program Files\Microsoft Office\Office15\OUTLOOK.exe" browser="None"/>
+	<object index="2" name="AD Server RD" path="ADServer.rdp" browser="None"/>
+	<object index="3" name="Github" path="https://github.com" browser="Internet Explorer"/>
 </objects>
