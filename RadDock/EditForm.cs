@@ -7,6 +7,7 @@ namespace RadDock
 	public partial class EditForm : Form
 	{
 		private UIBuilder ui = new UIBuilder();
+        private bool needsNewRows = false;
 
 		public EditForm()
 		{
@@ -57,7 +58,7 @@ namespace RadDock
 
 		private void Submit_Click(object sender, EventArgs e)
 		{
-			//TODO: write code to write strings to XML database for each dynamic text box.
+			//TODO: need to open a new data grid view with argument accepting application definitions.
 		}
 
 		private void Edit_Click(object sender, EventArgs e)
@@ -87,6 +88,24 @@ namespace RadDock
 				MessageBox.Show(ex.Message);
 			}
 		}
-	}
+
+        private void Update_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < TableFormView.Rows.Count; i++)
+            {
+                int id = i + 1;
+                ui.write(id, TableFormView.Rows[i].Cells["ProgName"].FormattedValue.ToString(), TableFormView.Rows[i].Cells["Browser"].FormattedValue.ToString(), TableFormView.Rows[i].Cells["Path"].FormattedValue.ToString());
+            }
+            DialogResult dr = MessageBox.Show("A restart of the application is required for your changes to be applied, would you like to restart now?", "Restart Required", MessageBoxButtons.YesNo);
+            if (dr == DialogResult.Yes)
+            {
+                Application.Restart();
+            }
+            else
+            {
+                //Do nothing.
+            }
+        }
+    }
 
 }

@@ -1,7 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<objects>
-	<object index="0" name="Google" path="http://google.com" browser="Chrome"/>
-	<object index="1" name="osTicket" path="C:\Program Files\Microsoft Office\Office15\OUTLOOK.exe" browser="None"/>
-	<object index="2" name="AD Server RD" path="ADServer.rdp" browser="None"/>
-	<object index="3" name="Github" path="https://github.com" browser="Internet Explorer"/>
-</objects>
+<container>
+  <programs>
+    <program id="1" name="Google" arg="Chrome">http://google.com</program>
+    <program id="2" name="osTicket" arg="Chrome">http://osticket.com</program>
+    <program id="3" name="Outook" arg="None">C:\Program Files\Microsoft Office\Office15\OUTLOOK.exe</program>
+    <program id="4" name="Github" arg="Internet Explorer">https://github.com</program>
+  </programs>
+  <args>
+    <arg id="Internet Explorer">C:\Program Files\Internet Explorer\iexplore.exe</arg>
+    <arg id="Chrome">C:\Program Files (x86)\Google\Chrome\Application\chrome.exe</arg>
+    <arg id="None">false</arg>
+  </args>
+</container>
