@@ -33,9 +33,13 @@ namespace RadDock
             return this.combo;
         }
 
-		public void write(int id, string name, string arg, string path)
+		public void writeProgramRow(int id, string name, string arg, string path)
 		{
-            db.write(id, name, arg, path);
+            db.writeProgramRow(id, name, arg, path);
+        }
+        public void writeArgRow(string id, string path)
+        {
+            db.writeArgRow(id, path);
         }
 	}
 }

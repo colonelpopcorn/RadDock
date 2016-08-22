@@ -10,5 +10,7 @@ Below you'll find a roadmap that outlines where I want this project to go in the
 <li><strike>Make the browser definition cross reference with the path.xml file and all the browser/application definitions therein.</strike></li>
 <li><strike>Make the dropdown in the tablegridview pre-populate with the right browser value.</strike></li>
 <li><strike>Make the tablegridview an entry point for users to be able to edit each item definition.</strike></li>
-<li>Make another form for the user to be able to add argument-accepting application definitions.</li>
+<li><strike>Make another form for the user to be able to add argument-accepting application definitions.</strike></li>
 </ul>
+
+Version 1 is finished and ready for consumption. I still have a few things I want to accomplish, and there are a lot of unknowns but this can go on the back burner now.

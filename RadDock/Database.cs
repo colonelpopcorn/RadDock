@@ -102,7 +102,7 @@ namespace RadDock
             return combo;
         }
 
-        public void write(int id, string name, string arg, string path)
+        public void writeProgramRow(int id, string name, string arg, string path)
         {
             XElement target;
             target = file
@@ -130,11 +130,40 @@ namespace RadDock
                         .Element("container")
                         .Element("programs")
                         .Add(target);
-                    file.Save("info.xml");
                 }
-                
             }
+            file.Save("info.xml");
 
+        }
+
+        public void writeArgRow(string id, string path)
+        {
+            XElement target;
+            target = file
+                .Element("container")
+                .Element("args")
+                .Elements("arg")
+                .SingleOrDefault(x => x.FirstAttribute.Value == id);
+
+            if (target != null)
+            {
+                target.Attribute("id").Value = id;
+                target.Value = path;
+            }
+            else
+            {
+                if (id != "" && path != "")
+                {
+                    target = new XElement("arg", new XAttribute("id", id));
+                    target.Value = path;
+                    file
+                        .Element("container")
+                        .Element("args")
+                        .Add(target);
+                }
+
+            }
+            file.Save("info.xml");
         }
 
     }
