@@ -1,6 +1,6 @@
 # A Radical Dock #
 
-[![Build Status][travis-badge]][travis-link]
+[![Build Status](https://travis-ci.org/colonelpopcorn/RadDock.svg?branch=master)](https://travis-ci.org/colonelpopcorn/RadDock)
 
 RadDock is a program I made while working as a computer repair technician for a company that specializes in point-of-sale computers. My original idea was to make it easy for users to find common functions that they might use once a day, but not all the time. This way they wouldn't have to minimize whatever they were working on to find their application. It also alleviated my workload when a user couldn't find a specific application.
 
