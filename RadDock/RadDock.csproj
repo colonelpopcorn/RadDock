@@ -58,6 +58,12 @@
       <DependentUpon>EditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="ProgramSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProgramSelection.Designer.cs">
+      <DependentUpon>ProgramSelection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RadDockComboBoxItem.cs">
       <SubType>Component</SubType>
@@ -69,6 +75,9 @@
     <Compile Include="UIBuilder.cs" />
     <EmbeddedResource Include="EditForm.resx">
       <DependentUpon>EditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgramSelection.resx">
+      <DependentUpon>ProgramSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

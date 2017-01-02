@@ -8,6 +8,7 @@ namespace RadDock
 {
     class Database
     {
+        private string pathToXML;
         private XDocument file;
         private List<KeyValuePair<string, infoObject>> programRows;
         private List<KeyValuePair<string, string>> argProgramRows;
@@ -22,8 +23,8 @@ namespace RadDock
 
         public Database(string path)
         {
-            var dir = AppDomain.CurrentDomain.BaseDirectory;
-            this.file = XDocument.Load(dir + path);
+            this.setPathToXml(path);
+            this.file = XDocument.Load(this.pathToXML);
             this.programRows = setProgramRows();
             this.argProgramRows = setArgumentRows();
             this.initalProgramRowNum = programRows.Count;
@@ -58,7 +59,7 @@ namespace RadDock
             return combo;
         }
 
-        public void writeProgramRow(int id, string name, string arg, string path)
+        public void writeProgramRow(int id, string name, string arg, string pathToExe)
         {
             XElement target;
             target = file
@@ -72,27 +73,27 @@ namespace RadDock
                 target.Attribute("id").Value = id.ToString();
                 target.Attribute("name").Value = name;
                 target.Attribute("arg").Value = arg;
-                target.Value = path;
+                target.Value = pathToExe;
             }
             else
             {
-                if (name != "" && arg != "" && path != "")
+                if (name != "" && arg != "" && pathToExe != "")
                 {
                     target = new XElement("program", new XAttribute("id", id.ToString()),
                     new XAttribute("name", name),
                     new XAttribute("arg", arg));
-                    target.Value = path;
+                    target.Value = pathToExe;
                     file
                         .Element("container")
                         .Element("programs")
                         .Add(target);
                 }
             }
-            file.Save("info.xml");
+            file.Save(this.pathToXML);
 
         }
 
-        public void writeArgRow(string id, string path)
+        public void writeArgRow(string id, string pathToExe)
         {
             XElement target;
             target = file
@@ -104,14 +105,14 @@ namespace RadDock
             if (target != null)
             {
                 target.Attribute("id").Value = id;
-                target.Value = path;
+                target.Value = pathToExe;
             }
             else
             {
-                if (id != "" && path != "")
+                if (id != "" && pathToExe != "")
                 {
                     target = new XElement("arg", new XAttribute("id", id));
-                    target.Value = path;
+                    target.Value = pathToExe;
                     file
                         .Element("container")
                         .Element("args")
@@ -119,7 +120,17 @@ namespace RadDock
                 }
 
             }
-            file.Save("info.xml");
+            file.Save(this.pathToXML);
+        }
+
+        public string getPathToXml()
+        {
+            return this.pathToXML;
+        }
+
+        private void setPathToXml(string path)
+        {
+            this.pathToXML = AppDomain.CurrentDomain.BaseDirectory + path;
         }
 
         private IEnumerable<XElement> getProgramRows()

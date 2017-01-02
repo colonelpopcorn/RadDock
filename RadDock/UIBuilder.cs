@@ -32,13 +32,14 @@ namespace RadDock
             return this.combo;
         }
 
-		public void writeProgramRow(int id, string name, string arg, string path)
+        //TODO: Clean this up so it takes an object and a path instead of four primitives.
+		public void writeProgramRow(int id, string name, string arg, string pathToExe)
 		{
-            db.writeProgramRow(id, name, arg, path);
+            db.writeProgramRow(id, name, arg, pathToExe);
         }
-        public void writeArgRow(string id, string path)
+        public void writeArgRow(string id, string pathToExe)
         {
-            db.writeArgRow(id, path);
+            db.writeArgRow(id, pathToExe);
         }
 	}
 }
