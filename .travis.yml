@@ -1,8 +1,14 @@
+addons:
+  apt:
+    packages:
+      - xvfb
 language: csharp
 solution: RadDock.sln
 install:
   - nuget restore RadDock.sln
   - nuget install NUnit.Runners -Version 3.5.0 -OutputDirectory testrunner
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 script:
   - xbuild /p:Configuration=Release RadDock.sln
   - mono ./testrunner/NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe ./RadDock/bin/Release/RadDock.exe
