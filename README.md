@@ -1,6 +1,8 @@
 # A Radical Dock #
 
-RadDock is a program I made while working as a computer repair technician for a company that specializes in point-of-sale computers. My original idea was to make it easy for users to find common functions that they might use once a day, but not all the time. This way they wouldn't have to minimize whatever they were working on to find their application. It also alleviated my workload when a user couldn't find a specific application. 
+[![Build Status][travis-badge]][travis-link]
+
+RadDock is a program I made while working as a computer repair technician for a company that specializes in point-of-sale computers. My original idea was to make it easy for users to find common functions that they might use once a day, but not all the time. This way they wouldn't have to minimize whatever they were working on to find their application. It also alleviated my workload when a user couldn't find a specific application.
 
 This is a more advanced version than the one that I originally developed, and I would like to improve this particular program with time. The biggest difference is where the program gets its path definitions. I created a very simple XML parser using MSDN documentation and persistence, and in the future I would like users to be able to write to this file. More persistence will be needed!
 
