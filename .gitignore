@@ -211,3 +211,6 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 /Class1.cs
+
+# Nuget package folder
+packages/
