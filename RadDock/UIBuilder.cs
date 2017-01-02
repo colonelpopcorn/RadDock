@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
 
 namespace RadDock
 {
-	class UIBuilder
+    class UIBuilder
 	{
 		private int i = 1;
-		private Database db = new Database();
-		private List<RadDockMenuItem> info;
-		public List<RadDockComboBoxItem> combo;
+		private Database db = new Database(@".\example.xml");
+		private IList<RadDockMenuItem> info;
+		public IList<RadDockComboBoxItem> combo;
 
 		public UIBuilder()
 		{
@@ -18,7 +16,8 @@ namespace RadDock
             this.combo = new List<RadDockComboBoxItem>();
 		}
 
-		public List<RadDockMenuItem> buildMenuOptions(EventHandler e)
+        //TODO: Find some way to automatically test this method!
+        public IList<RadDockMenuItem> buildMenuOptions(EventHandler e)
 		{
 			foreach (RadDockMenuItem obj in this.info)
 			{
@@ -27,7 +26,7 @@ namespace RadDock
 			return this.info;
 		}
 
-        public List<RadDockComboBoxItem> buildComboOptions()
+        public IList<RadDockComboBoxItem> buildComboOptions()
         {
             this.combo = db.getComboObject();
             return this.combo;

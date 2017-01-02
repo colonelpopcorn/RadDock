@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using System.IO;
 using System;
 
 namespace RadDock
@@ -19,62 +20,17 @@ namespace RadDock
             public string args;
         };
 
-        public Database()
+        public Database(string path)
         {
-            this.file = XDocument.Load(@".\info.xml");
+            var dir = AppDomain.CurrentDomain.BaseDirectory;
+            this.file = XDocument.Load(dir + path);
             this.programRows = setProgramRows();
             this.argProgramRows = setArgumentRows();
             this.initalProgramRowNum = programRows.Count;
             this.initalArgRowNum = argProgramRows.Count;
         }
 
-        private IEnumerable<XElement> getProgramRows()
-        {
-            IEnumerable<XElement> rows = from all in file.Descendants("program")
-                                         select all;
-            return rows;
-        }
-
-        private IEnumerable<XNode> getArgumentRows()
-        {
-            IEnumerable<XElement> rows = from all in file.Descendants("arg")
-                                         select all;
-
-            return rows;
-        }
-
-        private List<KeyValuePair<string, infoObject>> setProgramRows()
-        {
-            List<KeyValuePair<string, infoObject>> progRows = new List<KeyValuePair<string, infoObject>>();
-            foreach (XElement element in this.getProgramRows())
-            {
-                string name = element.Attribute("name").Value.ToString();
-                string path = @element.Value.ToString();
-                string browser = element.Attribute("arg").Value.ToString();
-                infoObject programRow = new infoObject();
-                programRow.name = name;
-                programRow.path = path;
-                programRow.args = browser;
-                KeyValuePair<string, infoObject> finalRow = new KeyValuePair<string, infoObject>(name, programRow);
-                progRows.Add(finalRow);
-            }
-
-            return progRows;
-        }
-
-        private List<KeyValuePair<string, string>> setArgumentRows()
-        {
-            List<KeyValuePair<string, string>> argProgRows = new List<KeyValuePair<string, string>>();
-            foreach (XElement element in this.getArgumentRows())
-            {
-                string path = @element.Value;
-                string name = @element.Attribute("id").Value.ToString();
-                argProgRows.Add(new KeyValuePair<string, string>(name, path));
-            }
-            return argProgRows;
-        }
-
-        public List<RadDockMenuItem> getInfoObject()
+        public IList<RadDockMenuItem> getInfoObject()
         {
             List<RadDockMenuItem> info = new List<RadDockMenuItem>();
             string argPath = "";
@@ -92,7 +48,7 @@ namespace RadDock
             return info;
         }
 
-        public List<RadDockComboBoxItem> getComboObject()
+        public IList<RadDockComboBoxItem> getComboObject()
         {
             List<RadDockComboBoxItem> combo = new List<RadDockComboBoxItem>();
             foreach (KeyValuePair<string, string> row in this.argProgramRows)
@@ -165,6 +121,53 @@ namespace RadDock
             }
             file.Save("info.xml");
         }
+
+        private IEnumerable<XElement> getProgramRows()
+        {
+            IEnumerable<XElement> rows = from all in file.Descendants("program")
+                                         select all;
+            return rows;
+        }
+
+        private IEnumerable<XNode> getArgumentRows()
+        {
+            IEnumerable<XElement> rows = from all in file.Descendants("arg")
+                                         select all;
+
+            return rows;
+        }
+
+        private List<KeyValuePair<string, infoObject>> setProgramRows()
+        {
+            List<KeyValuePair<string, infoObject>> progRows = new List<KeyValuePair<string, infoObject>>();
+            foreach (XElement element in this.getProgramRows())
+            {
+                string name = element.Attribute("name").Value.ToString();
+                string path = @element.Value.ToString();
+                string browser = element.Attribute("arg").Value.ToString();
+                infoObject programRow = new infoObject();
+                programRow.name = name;
+                programRow.path = path;
+                programRow.args = browser;
+                KeyValuePair<string, infoObject> finalRow = new KeyValuePair<string, infoObject>(name, programRow);
+                progRows.Add(finalRow);
+            }
+
+            return progRows;
+        }
+
+        private List<KeyValuePair<string, string>> setArgumentRows()
+        {
+            List<KeyValuePair<string, string>> argProgRows = new List<KeyValuePair<string, string>>();
+            foreach (XElement element in this.getArgumentRows())
+            {
+                string path = @element.Value;
+                string name = @element.Attribute("id").Value.ToString();
+                argProgRows.Add(new KeyValuePair<string, string>(name, path));
+            }
+            return argProgRows;
+        }
+
 
     }
 }
