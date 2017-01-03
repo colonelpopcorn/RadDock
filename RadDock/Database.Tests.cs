@@ -6,13 +6,6 @@ namespace RadDock
     public class DatabaseTests
     {
         [Test]
-        public void TestMethod()
-        {
-            // TODO: Add your test code here
-            Assert.Pass("Your first passing test");
-        }
-
-        [Test]
         public void IsValidProgramRows()
         {
             var db = new Database(@".\example.xml");
