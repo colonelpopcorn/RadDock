@@ -6,9 +6,10 @@ namespace RadDock
 {
 	public partial class EditForm : Form
 	{
-		private UIBuilder ui = new UIBuilder();
+        private UIBuilder ui;
+        private string selectedValue;
 
-		public EditForm()
+        public EditForm()
 		{
 			
 			InitializeComponent();
@@ -17,7 +18,16 @@ namespace RadDock
 			this.Hide();
 		}
 
-		private void InitializeDynamicForm()
+        public EditForm(string selectedValue):base()
+        {
+            ui = new UIBuilder(selectedValue);
+            InitializeComponent();
+            InitializeDynamicForm();
+            this.Opacity = 0;
+            this.Hide();
+        }
+
+        private void InitializeDynamicForm()
 		{
             reset();
             insertArgs();

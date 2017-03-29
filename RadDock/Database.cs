@@ -23,8 +23,7 @@ namespace RadDock
 
         public Database(string path)
         {
-            this.setPathToXml(path);
-            this.file = XDocument.Load(this.pathToXML);
+            this.file = XDocument.Load(path);
             this.programRows = setProgramRows();
             this.argProgramRows = setArgumentRows();
             this.initalProgramRowNum = programRows.Count;

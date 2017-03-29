@@ -6,15 +6,24 @@ namespace RadDock
     class UIBuilder
 	{
 		private int i = 1;
-		private Database db = new Database(@".\example.xml");
+		private Database db;
 		private IList<RadDockMenuItem> info;
 		public IList<RadDockComboBoxItem> combo;
+        private string selectedValue;
 
-		public UIBuilder()
+        public UIBuilder()
 		{
 			this.info = db.getInfoObject();
             this.combo = new List<RadDockComboBoxItem>();
 		}
+
+        public UIBuilder(string selectedValue):base()
+        {
+            this.selectedValue = selectedValue;
+            this.db = new Database(selectedValue);
+            this.info = db.getInfoObject();
+            this.combo = new List<RadDockComboBoxItem>();
+        }
 
         //TODO: Find some way to automatically test this method!
         public IList<RadDockMenuItem> buildMenuOptions(EventHandler e)

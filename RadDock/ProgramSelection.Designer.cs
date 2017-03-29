@@ -31,7 +31,7 @@
         {
             this.ExitButton = new System.Windows.Forms.Button();
             this.LoadButton = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.configFileBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // ExitButton
@@ -52,25 +52,27 @@
             this.LoadButton.TabIndex = 1;
             this.LoadButton.Text = "Load";
             this.LoadButton.UseVisualStyleBackColor = true;
+            this.LoadButton.Click += new System.EventHandler(this.LoadButton_Click);
             // 
-            // comboBox1
+            // configFileBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(85, 116);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(384, 21);
-            this.comboBox1.TabIndex = 2;
+            this.configFileBox.FormattingEnabled = true;
+            this.configFileBox.Location = new System.Drawing.Point(85, 116);
+            this.configFileBox.Name = "configFileBox";
+            this.configFileBox.Size = new System.Drawing.Size(384, 21);
+            this.configFileBox.TabIndex = 2;
             // 
             // ProgramSelection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(572, 253);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.configFileBox);
             this.Controls.Add(this.LoadButton);
             this.Controls.Add(this.ExitButton);
             this.Name = "ProgramSelection";
             this.Text = "ProgramSelection";
+            this.Load += new System.EventHandler(this.ProgramSelection_Load);
             this.ResumeLayout(false);
 
         }
@@ -79,6 +81,6 @@
 
         private System.Windows.Forms.Button ExitButton;
         private System.Windows.Forms.Button LoadButton;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox configFileBox;
     }
 }
